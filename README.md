@@ -39,6 +39,31 @@ VITE_SUPABASE_PUBLISHABLE_KEY=
 
 Segredos de Google, Microsoft, WhatsApp e pagamento devem ser configurados no servidor/Supabase, não no código do navegador.
 
+## Integração Google
+
+O botão `Configurar conexão` em Gmail e Google Drive inicia o OAuth pela Edge Function `google-oauth-handler`.
+
+No Google Cloud, crie credenciais OAuth do tipo Web e cadastre a URL de retorno da função:
+
+```bash
+https://SEU-PROJETO.supabase.co/functions/v1/google-oauth-handler
+```
+
+No Supabase, aplique as migrations e cadastre os secrets da função:
+
+```bash
+supabase db push
+supabase secrets set APP_URL=http://127.0.0.1:8080
+supabase secrets set SUPABASE_SERVICE_ROLE_KEY=...
+supabase secrets set GOOGLE_CLIENT_ID=...
+supabase secrets set GOOGLE_CLIENT_SECRET=...
+supabase secrets set GOOGLE_REDIRECT_URI=https://SEU-PROJETO.supabase.co/functions/v1/google-oauth-handler
+supabase secrets set OAUTH_STATE_SECRET=uma-frase-grande-e-aleatoria
+supabase functions deploy google-oauth-handler
+```
+
+Nesta primeira etapa a conexão pede permissões de leitura para Gmail e Google Drive. Ações de excluir, arquivar ou responder devem continuar passando pela fila de aprovação do usuário antes de qualquer execução real.
+
 ## Desenvolvimento
 
 ```bash

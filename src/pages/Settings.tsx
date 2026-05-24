@@ -6,6 +6,10 @@ import { SecuritySettings } from '@/components/settings/SecuritySettings'
 import { IntegrationSettings } from '@/components/settings/IntegrationSettings'
 
 export default function Settings() {
+  const defaultTab = new URLSearchParams(window.location.search).get('integration')
+    ? 'integrations'
+    : 'profile'
+
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-fade-in-up pb-12">
       <div>
@@ -15,7 +19,7 @@ export default function Settings() {
         </p>
       </div>
 
-      <Tabs defaultValue="profile" className="w-full">
+      <Tabs defaultValue={defaultTab} className="w-full">
         <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 bg-card border border-border/50 rounded-[20px] mb-8 h-auto p-2 shadow-sm">
           <TabsTrigger
             value="profile"

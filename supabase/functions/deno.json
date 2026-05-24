@@ -1,5 +1,6 @@
 {
   "_versions": {
-    "process-invoice": 3
+    "process-invoice": 3,
+    "google-oauth-handler": 1
   }
 }
